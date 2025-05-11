@@ -1,5 +1,8 @@
+import { useParams } from "react-router";
+
 const PostDetail = () => {
-  return <></>;
+  const { postId } = useParams();
+  return <>{postId}</>;
 };
 
 export default PostDetail;
