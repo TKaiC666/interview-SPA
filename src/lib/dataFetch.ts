@@ -39,6 +39,14 @@ export const getAllPosts = async () => {
   return data;
 };
 
+// 沒有帶 postId 時，會回傳所有的 post
+export const getPosts = async (postId?: number) => {
+  const apiUrl = getApiUrl(`/posts/${postId ?? ""}`);
+  const data = await fetchData<Post[]>({ apiUrl });
+
+  return data;
+};
+
 /*
  * query start 和 end 時，api 的 response header 會有 X-Total-Count，
  * 表示總共有多少筆 post。
