@@ -1,11 +1,13 @@
+import { useState } from "react";
 import { Link } from "react-router";
-import useFetchData from "@/hooks/useFetchData";
-import { getAllPosts } from "@/lib/dataFetch";
+import usePosts from "@/hooks/usePosts";
 
-// TODO: userName 的資訊要用 userId 和 getUserInfo 取得。
-// TODO: 兩個 api 的 data mapping
 const Posts = () => {
-  const { data, isLoading, error, refetch } = useFetchData(getAllPosts);
+  const [cursor, setCursor] = useState<{ start: number; end: number }>({
+    start: 0,
+    end: 10,
+  });
+  const { posts, totalPostCount, isLoading, error, refetch } = usePosts(cursor);
 
   if (isLoading) {
     return <p>Loading...</p>;
@@ -17,12 +19,12 @@ const Posts = () => {
 
   return (
     <section>
-      {data && (
+      {posts && (
         <ul>
-          {data.map((post, index) => (
+          {posts.map((post, index) => (
             <li key={post.id}>
               <Link to={`/post-detail/${post.id}`}>
-                <span>{index + 1}</span>
+                <span>{index + 1 + cursor.start}</span>
                 <span>{post.title}</span>
                 <span>{post.userId}</span>
               </Link>
@@ -30,7 +32,35 @@ const Posts = () => {
           ))}
         </ul>
       )}
-      <button onClick={refetch}>Refetch</button>
+      {cursor.start > 0 && (
+        <button
+          onClick={() => {
+            setCursor((prev) => ({
+              start: prev.start - 10,
+              end: prev.end - 10,
+            }));
+          }}
+        >
+          Prev
+        </button>
+      )}
+      <span>
+        {cursor.start + 1} - {cursor.end} of {totalPostCount}
+      </span>
+      {totalPostCount > cursor.end && (
+        <button
+          onClick={() => {
+            setCursor((prev) => ({
+              start: prev.start + 10,
+              end: prev.end + 10,
+            }));
+          }}
+        >
+          Next
+        </button>
+      )}
+
+      <button onClick={refetch}>Refresh</button>
     </section>
   );
 };
