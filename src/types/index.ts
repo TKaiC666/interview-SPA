@@ -5,7 +5,7 @@ type Address = unknown;
 export type User = {
   id: number;
   name: string;
-  userName: string;
+  username: string;
   phone: string;
   website: string;
   company: Company;
