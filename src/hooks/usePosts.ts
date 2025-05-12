@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { getPaginatedPosts, getUserInfo } from "@/lib/dataFetch";
 import type { Post, User } from "@/types";
+import { filterRepeatedNumber } from "@/utils";
 
 type PostInfo = Post & Pick<User, "username">;
 type UsePostProps = {
@@ -19,8 +20,11 @@ const usePosts = ({ start, end }: UsePostProps) => {
       const postsData = await getPaginatedPosts({ start, end });
       if (!postsData) throw new Error("Failed to fetch posts");
       const { totalPostCount, data } = postsData;
+      const nonRepeatedUserIds = filterRepeatedNumber(
+        data.map((post) => post.userId)
+      );
       const usersInfo = await Promise.all(
-        data.map(async (post) => getUserInfo(post.userId))
+        nonRepeatedUserIds.map(async (userId) => getUserInfo(userId))
       );
       const postsWithUsernames = data.map((post) => ({
         ...post,
