@@ -40,9 +40,9 @@ export const getAllPosts = async () => {
 };
 
 // 沒有帶 postId 時，會回傳所有的 post
-export const getPosts = async (postId?: number) => {
-  const apiUrl = getApiUrl(`/posts/${postId ?? ""}`);
-  const data = await fetchData<Post[]>({ apiUrl });
+export const getPostWithPostId = async (postId: number) => {
+  const apiUrl = getApiUrl(`/posts/${postId}`);
+  const data = await fetchData<Post>({ apiUrl });
 
   return data;
 };
