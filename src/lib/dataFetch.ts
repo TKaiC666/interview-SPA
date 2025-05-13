@@ -32,13 +32,6 @@ const fetchData = async <T>({
   }
 };
 
-export const getAllPosts = async () => {
-  const apiUrl = getApiUrl("/posts");
-  const data = await fetchData<Post[]>({ apiUrl });
-
-  return data;
-};
-
 // 沒有帶 postId 時，會回傳所有的 post
 export const getPostWithPostId = async (postId: number) => {
   const apiUrl = getApiUrl(`/posts/${postId}`);
@@ -97,13 +90,6 @@ export const getPostComments = async (postId: number) => {
   const query = `?postId=${postId}`;
   const apiUrl = getApiUrl("/comments") + query;
   const data = await fetchData<Comment[]>({ apiUrl });
-
-  return data;
-};
-
-export const deletePost = async (postId: number) => {
-  const apiUrl = getApiUrl(`/posts/${postId}`);
-  const data = await fetchData<Post>({ apiUrl, method: "DELETE" });
 
   return data;
 };
