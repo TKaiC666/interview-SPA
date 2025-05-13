@@ -103,7 +103,7 @@ const usePosts = ({ start, end }: UsePostProps) => {
   };
 
   const fetchPosts = useCallback(async () => {
-    if (!isLoading) setIsLoading(true);
+    setIsLoading(true);
     try {
       const postsData = await getPaginatedPosts({ start, end });
       if (!postsData) throw new Error("Failed to fetch posts");
