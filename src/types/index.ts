@@ -26,3 +26,5 @@ export type Comment = {
   email: string;
   body: string;
 };
+
+export type PostInfo = Post & Pick<User, "username">;
