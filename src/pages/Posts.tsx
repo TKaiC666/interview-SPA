@@ -30,14 +30,17 @@ const Posts = () => {
     {
       id: "id",
       label: "Index",
+      width: "5%",
     },
     {
       id: "title",
       label: "Title",
+      width: "70%",
     },
     {
       id: "username",
       label: "User",
+      width: "25%",
     },
   ];
 

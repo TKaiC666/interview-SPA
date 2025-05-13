@@ -10,7 +10,12 @@ const CustomTableHead = ({ columns }: CustomTableHeadProps) => {
     <TableHead>
       <TableRow>
         {columns.map((column) => (
-          <TableCell key={column.id} align="left" padding="normal">
+          <TableCell
+            key={column.id}
+            width={column.width}
+            align="left"
+            padding="normal"
+          >
             <TableSortLabel direction="asc">{column.label}</TableSortLabel>
           </TableCell>
         ))}
