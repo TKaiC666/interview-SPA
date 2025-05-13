@@ -5,13 +5,13 @@ interface CustomTableHeadProps {
   columns: readonly Column[];
 }
 
-const CustomTableHead = ({ columns: headCells }: CustomTableHeadProps) => {
+const CustomTableHead = ({ columns }: CustomTableHeadProps) => {
   return (
     <TableHead>
       <TableRow>
-        {headCells.map((headCell) => (
-          <TableCell key={headCell.id} align="left" padding="normal">
-            <TableSortLabel direction="asc">{headCell.label}</TableSortLabel>
+        {columns.map((column) => (
+          <TableCell key={column.id} align="left" padding="normal">
+            <TableSortLabel direction="asc">{column.label}</TableSortLabel>
           </TableCell>
         ))}
       </TableRow>
