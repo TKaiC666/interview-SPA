@@ -107,3 +107,10 @@ export const deletePost = async (postId: number) => {
 
   return data;
 };
+
+export const deletePostComment = async (commentId: number) => {
+  const apiUrl = getApiUrl(`/comments/${commentId}`);
+  const data = await fetchData({ apiUrl, method: "DELETE" });
+
+  return data;
+};
