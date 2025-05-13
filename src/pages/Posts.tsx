@@ -6,7 +6,11 @@ import {
   TableContainer,
   TablePagination,
   CircularProgress,
+  Stack,
+  Button,
+  Typography,
 } from "@mui/material";
+import RefreshIcon from "@mui/icons-material/Refresh";
 import usePosts from "@/hooks/usePosts";
 import type { Column } from "@/types/ui";
 import CustomTableHead from "@/components/CustomTableHead";
@@ -24,7 +28,7 @@ const Posts = () => {
   const { posts, totalPostCount, isLoading, error, refetch } = usePosts(cursor);
   const columns: Column[] = [
     {
-      id: "dataIndex",
+      id: "id",
       label: "Index",
     },
     {
@@ -45,12 +49,45 @@ const Posts = () => {
     });
   };
 
+  const handleClickRefresh = () => {
+    refetch();
+  };
+
   if (error) {
     return <p>{error}</p>;
   }
 
   return (
     <Container>
+      <Stack
+        spacing={{ xs: 1, sm: 2 }}
+        direction="row"
+        useFlexGap
+        sx={{
+          mb: 2,
+          justifyContent: "space-between",
+          alignItems: "center",
+          flexWrap: "wrap",
+        }}
+      >
+        <Typography
+          variant="h6"
+          component="h6"
+          sx={{
+            display: "flex",
+          }}
+        >
+          All Posts
+        </Typography>
+        <Button
+          variant="contained"
+          disabled={isLoading}
+          startIcon={<RefreshIcon />}
+          onClick={handleClickRefresh}
+        >
+          Refresh
+        </Button>
+      </Stack>
       <Paper sx={{ position: "relative", width: "100%", mb: 2 }}>
         {isLoading && (
           <div
@@ -76,7 +113,7 @@ const Posts = () => {
                   zIndex: -1,
                   width: "100%",
                   height: "100%",
-                  backgroundColor: "rgba(190, 190, 190, 0.5)",
+                  backgroundColor: "rgba(190, 190, 190, 0.25)",
                 }}
               />
               <CircularProgress />
@@ -97,7 +134,6 @@ const Posts = () => {
           page={page}
           onPageChange={handleChangePage}
         />
-        {/* <button onClick={refetch}>Refresh</button> */}
       </Paper>
     </Container>
   );
