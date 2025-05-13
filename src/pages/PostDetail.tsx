@@ -3,7 +3,7 @@ import usePostDetail from "@/hooks/usePostDetail";
 
 const PostDetail = () => {
   const postId = Number(useParams().postId);
-  const { data, isLoading, error } = usePostDetail(postId);
+  const { data, isLoading, error, deleteComment } = usePostDetail(postId);
 
   if (isLoading) {
     return <p>Loading...</p>;
@@ -28,6 +28,13 @@ const PostDetail = () => {
               <li key={comment.id}>
                 <span>{comment.name}</span>
                 <span>{comment.body}</span>
+                <button
+                  onClick={() => {
+                    deleteComment(comment.id);
+                  }}
+                >
+                  X
+                </button>
               </li>
             ))}
           </ul>

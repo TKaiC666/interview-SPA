@@ -3,6 +3,7 @@ import {
   getPostWithPostId,
   getUserInfo,
   getPostComments,
+  deletePostComment,
 } from "@/lib/dataFetch";
 import type { Post, User, Comment } from "@/types";
 
@@ -43,11 +44,28 @@ const usePostDetail = (postId: number) => {
     }
   }, [postId]);
 
+  const deleteComment = async (targetCommentId: number) => {
+    try {
+      const result = await deletePostComment(targetCommentId);
+      if (!result) {
+        throw new Error("Failed to delete comment");
+      }
+      setData((prevData) => ({
+        ...prevData!,
+        comments: prevData!.comments.filter(
+          (comment) => comment.id !== targetCommentId
+        ),
+      }));
+    } catch (err) {
+      setError(err as string);
+    }
+  };
+
   useEffect(() => {
     fetchPostDetail();
   }, [fetchPostDetail]);
 
-  return { data, isLoading, error };
+  return { data, isLoading, error, deleteComment };
 };
 
 export default usePostDetail;
