@@ -1,4 +1,4 @@
-import { Link } from "react-router";
+import { useNavigate } from "react-router";
 import { TableBody, TableRow, TableCell } from "@mui/material";
 import type { PostInfo } from "@/types";
 import type { Column } from "@/types/ui";
@@ -9,16 +9,37 @@ type CustomTableBodyProps = {
 };
 
 const CustomTableBody = ({ columns, rows }: CustomTableBodyProps) => {
+  const ROUTE_POST_DETAIL = "/post-detail";
+  const navigate = useNavigate();
+  const handleRowClick = (postId: number) => {
+    navigate(`${ROUTE_POST_DETAIL}/${postId}`);
+  };
+
   return (
     <TableBody>
       {rows.map((row) => (
-        <TableRow>
-          {/* <Link to={`/post-detail/${row.id}`}> */}
+        <TableRow
+          key={row.id}
+          style={{ textDecoration: "none" }}
+          hover
+          onClick={() => {
+            handleRowClick(row.id);
+          }}
+          sx={{
+            "&:hover": {
+              cursor: "pointer",
+            },
+          }}
+        >
           {columns.map((column) => {
+            // 暫不處理型別問題
             const value = row[column.id];
-            return <TableCell align="left">{value}</TableCell>;
+            return (
+              <TableCell key={`${column.id}-${row.id}`} align="left">
+                {value}
+              </TableCell>
+            );
           })}
-          {/* </Link> */}
         </TableRow>
       ))}
     </TableBody>
