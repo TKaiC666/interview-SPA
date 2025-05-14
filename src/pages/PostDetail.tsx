@@ -61,9 +61,7 @@ const PostDetail = () => {
           <Divider sx={{ mb: 10 }} />
           <Box>
             <Typography variant="h5">Comments</Typography>
-            <CommentContext.Provider
-              value={{ isCommentDeleting, deleteComment }}
-            >
+            <CommentContext.Provider value={{ deleteComment }}>
               <CommentsList comments={data.comments} />
             </CommentContext.Provider>
           </Box>
