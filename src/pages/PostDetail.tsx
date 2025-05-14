@@ -1,46 +1,54 @@
+import { Container, Box, Typography, Skeleton, Divider } from "@mui/material";
 import { useParams } from "react-router";
 import usePostDetail from "@/hooks/usePostDetail";
+import CommentsList from "@/components/CommentsList";
 
 const PostDetail = () => {
   const postId = Number(useParams().postId);
-  const { data, isLoading, error, deleteComment } = usePostDetail(postId);
-
-  if (isLoading) {
-    return <p>Loading...</p>;
-  }
+  const { data, isLoading, error } = usePostDetail(postId);
 
   if (error) {
     return <p>{error}</p>;
   }
 
   return (
-    <section>
-      {data && (
+    <Container maxWidth="sm" sx={{ mt: 10 }}>
+      {isLoading && (
         <>
-          <ul>
-            <li>{data.id}</li>
-            <li>{data.username}</li>
-            <li>{data.title}</li>
-            <li>{data.body}</li>
-          </ul>
-          <ul>
-            {data.comments.map((comment) => (
-              <li key={comment.id}>
-                <span>{comment.name}</span>
-                <span>{comment.body}</span>
-                <button
-                  onClick={() => {
-                    deleteComment(comment.id);
-                  }}
-                >
-                  X
-                </button>
-              </li>
-            ))}
-          </ul>
+          <Box sx={{ mb: 3 }}>
+            <Skeleton variant="text" sx={{ mb: 1 }} />
+            <Skeleton variant="text" width="30%" />
+          </Box>
+          <Box>
+            <Skeleton variant="rounded" height={300} />
+          </Box>
         </>
       )}
-    </section>
+      {data && (
+        <>
+          <Box>
+            <Typography variant="h4" component="h4" sx={{ mb: 1 }}>
+              {data.title}
+            </Typography>
+            <Typography
+              variant="subtitle1"
+              component="div"
+              color="text.secondary"
+            >
+              {data.username}
+            </Typography>
+          </Box>
+          <Box sx={{ mt: 5, mb: 10 }}>
+            <Typography variant="body1">{data.body}</Typography>
+          </Box>
+          <Divider sx={{ mb: 10 }} />
+          <Box>
+            <Typography variant="h5">Comments</Typography>
+            <CommentsList comments={data.comments} />
+          </Box>
+        </>
+      )}
+    </Container>
   );
 };
 
