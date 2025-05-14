@@ -61,7 +61,7 @@ const Posts = () => {
   }
 
   return (
-    <Container>
+    <>
       <Stack
         spacing={{ xs: 1, sm: 2 }}
         direction="row"
@@ -74,8 +74,8 @@ const Posts = () => {
         }}
       >
         <Typography
-          variant="h6"
-          component="h6"
+          variant="h5"
+          component="h5"
           sx={{
             display: "flex",
           }}
@@ -138,7 +138,7 @@ const Posts = () => {
           onPageChange={handleChangePage}
         />
       </Paper>
-    </Container>
+    </>
   );
 };
 

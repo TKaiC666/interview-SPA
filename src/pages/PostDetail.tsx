@@ -1,18 +1,31 @@
-import { Container, Box, Typography, Skeleton, Divider } from "@mui/material";
-import { useParams } from "react-router";
+import {
+  Container,
+  Box,
+  Typography,
+  Skeleton,
+  Divider,
+  Button,
+} from "@mui/material";
+import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
+import { useParams, useNavigate } from "react-router";
 import usePostDetail from "@/hooks/usePostDetail";
 import CommentsList from "@/components/CommentsList";
 
 const PostDetail = () => {
+  const navigate = useNavigate();
   const postId = Number(useParams().postId);
   const { data, isLoading, error } = usePostDetail(postId);
+
+  const handleClickBack = () => {
+    navigate("/");
+  };
 
   if (error) {
     return <p>{error}</p>;
   }
 
   return (
-    <Container maxWidth="sm" sx={{ mt: 10 }}>
+    <>
       {isLoading && (
         <>
           <Box sx={{ mb: 3 }}>
@@ -26,6 +39,16 @@ const PostDetail = () => {
       )}
       {data && (
         <>
+          <Box sx={{ mb: 2 }}>
+            <Button
+              variant="text"
+              startIcon={<ArrowBackIosNewIcon />}
+              onClick={handleClickBack}
+              sx={{ fontSize: "0.8rem" }}
+            >
+              Back to all post
+            </Button>
+          </Box>
           <Box>
             <Typography variant="h4" component="h4" sx={{ mb: 1 }}>
               {data.title}
@@ -48,7 +71,7 @@ const PostDetail = () => {
           </Box>
         </>
       )}
-    </Container>
+    </>
   );
 };
 
