@@ -1,11 +1,4 @@
-import {
-  Container,
-  Box,
-  Typography,
-  Skeleton,
-  Divider,
-  Button,
-} from "@mui/material";
+import { Box, Typography, Skeleton, Divider, Button } from "@mui/material";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import { useParams, useNavigate } from "react-router";
 import usePostDetail from "@/hooks/usePostDetail";
