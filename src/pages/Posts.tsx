@@ -91,41 +91,14 @@ const Posts = () => {
         </Button>
       </Stack>
       <Paper sx={{ position: "relative", width: "100%", mb: 2 }}>
-        {isLoading && (
-          <div
-            style={{
-              position: "absolute",
-              zIndex: 1,
-              width: "100%",
-              height: "100%",
-            }}
-          >
-            <div
-              style={{
-                position: "relative",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                height: "100%",
-              }}
-            >
-              <div
-                style={{
-                  position: "absolute",
-                  zIndex: -1,
-                  width: "100%",
-                  height: "100%",
-                  backgroundColor: "rgba(190, 190, 190, 0.25)",
-                }}
-              />
-              <CircularProgress />
-            </div>
-          </div>
-        )}
         <TableContainer style={{ position: "relative" }}>
           <Table>
             <CustomTableHead columns={columns} />
-            <CustomTableBody columns={columns} rows={posts} />
+            <CustomTableBody
+              columns={columns}
+              rows={posts}
+              isLoading={isLoading}
+            />
           </Table>
         </TableContainer>
         <TablePagination
