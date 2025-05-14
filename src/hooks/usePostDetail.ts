@@ -56,8 +56,10 @@ const usePostDetail = (postId: number) => {
           (comment) => comment.id !== targetCommentId
         ),
       }));
+      return "success";
     } catch (err) {
       setError(err as string);
+      return "fail";
     }
   };
 
