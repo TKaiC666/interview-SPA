@@ -2,12 +2,13 @@ import { Box, Typography, Skeleton, Divider, Button } from "@mui/material";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import { useParams, useNavigate } from "react-router";
 import usePostDetail from "@/hooks/usePostDetail";
+import { CommentContext } from "@/contexts/commentContext";
 import CommentsList from "@/components/CommentsList";
 
 const PostDetail = () => {
   const navigate = useNavigate();
   const postId = Number(useParams().postId);
-  const { data, isLoading, error } = usePostDetail(postId);
+  const { data, isLoading, error, deleteComment } = usePostDetail(postId);
 
   const handleClickBack = () => {
     navigate("/");
@@ -60,7 +61,11 @@ const PostDetail = () => {
           <Divider sx={{ mb: 10 }} />
           <Box>
             <Typography variant="h5">Comments</Typography>
-            <CommentsList comments={data.comments} />
+            <CommentContext.Provider
+              value={{ isCommentDeleting, deleteComment }}
+            >
+              <CommentsList comments={data.comments} />
+            </CommentContext.Provider>
           </Box>
         </>
       )}

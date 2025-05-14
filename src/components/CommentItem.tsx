@@ -1,12 +1,29 @@
-import { Typography, ListItem, ListItemText, IconButton } from "@mui/material";
+import { useState } from "react";
+import {
+  Typography,
+  ListItem,
+  ListItemText,
+  IconButton,
+  CircularProgress,
+} from "@mui/material";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import type { Comment } from "@/types";
+import { useComment } from "@/contexts/commentContext";
 
 type CommentItemProps = {
   data: Comment;
 };
 
 const CommentItem = ({ data }: CommentItemProps) => {
+  const [isDeleting, setIsDeleting] = useState<boolean>(false);
+  const { deleteComment } = useComment();
+  const handleClickDeleteComment = async () => {
+    if (!deleteComment) return;
+    setIsDeleting(true);
+    const result = await deleteComment(data.id);
+    if (result === "success") setIsDeleting(false);
+  };
+
   return (
     <ListItem
       alignItems="flex-start"
@@ -15,11 +32,16 @@ const CommentItem = ({ data }: CommentItemProps) => {
         <IconButton
           edge="end"
           aria-label="delete"
-          onClick={() => {
-            console.log("comment id: ", data.id);
+          disabled={isDeleting}
+          sx={{
+            position: "relative",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
           }}
+          onClick={handleClickDeleteComment}
         >
-          <DeleteForeverIcon />
+          {isDeleting ? <CircularProgress size={20} /> : <DeleteForeverIcon />}
         </IconButton>
       }
     >
