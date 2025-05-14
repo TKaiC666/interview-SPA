@@ -16,6 +16,9 @@ yarn
 yarn dev
 ```
 
+server will launch at: http://localhost:5173/
+default port: 5173
+
 ## Features
 
 A SPA show posts and detail information. data from jsonplaceholder.
